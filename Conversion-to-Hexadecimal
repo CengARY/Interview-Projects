@@ -1,0 +1,28 @@
+#include <QCoreApplication>
+#include <QByteArray>
+#include <QDebug>
+#include <iostream>
+#include <stdint.h>
+#include <cstring>
+using namespace std;
+void int32_Paketle(QByteArray *byteArray, int32_t value){
+    char buffer[sizeof(value)];
+    std::memcpy(buffer, &value, sizeof(value));
+    byteArray->append(buffer, sizeof(value));
+}
+
+int main()
+{
+    QByteArray Buffer;
+    int32_t value1 = 3680;
+    int32_t value2 = 50;
+    int32_t value3 = -680;
+
+    int32_Paketle(&Buffer, value1);
+    int32_Paketle(&Buffer, value2);
+    int32_Paketle(&Buffer, value3);
+    Buffer.resize(Buffer.size());
+
+    qDebug() << Buffer.toHex();
+    return 0;
+}
